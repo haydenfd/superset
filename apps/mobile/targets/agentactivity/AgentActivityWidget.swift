@@ -116,12 +116,13 @@ private struct Row: View {
 				.foregroundStyle(stateColor(row.state))
 				.lineLimit(1)
 				.fixedSize()
-			Text(row.elapsed)
+			Text(Date(timeIntervalSince1970: row.since / 1000), style: .relative)
 				.font(.system(size: Metrics.metaSize))
 				.monospacedDigit()
 				.foregroundStyle(.tertiary)
+				.lineLimit(1)
 				.multilineTextAlignment(.trailing)
-				.frame(width: Metrics.timeWidth, alignment: .trailing)
+				.frame(minWidth: Metrics.timeWidth, alignment: .trailing)
 		}
 		.opacity(row.isQuiet ? 0.42 : 1)
 	}
@@ -130,10 +131,11 @@ private struct Row: View {
 private struct CardBody: View {
 	let context: ActivityViewContext<AgentActivityAttributes>
 
-	/// The footer is the one line where the card can admit it has stopped
-	/// hearing anything.
+	/// A hidden agent outranks the stale notice: the dimmed card already says
+	/// it stopped hearing anything, so "Not updating" only takes the footer
+	/// when there is nothing dropped to count.
 	private var footer: String? {
-		context.isStale ? context.state.staleDetail : context.state.more
+		context.state.more ?? (context.isStale ? context.state.staleDetail : nil)
 	}
 
 	var body: some View {

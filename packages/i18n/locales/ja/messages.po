@@ -1043,9 +1043,6 @@ msgstr "~/agent $"
 msgid "⌘ click"
 msgstr "⌘クリック"
 
-msgid "⌘↵ to send"
-msgstr "⌘↵で送信"
-
 msgid "⌘⇧ click"
 msgstr "⌘⇧クリック"
 
@@ -10168,6 +10165,9 @@ msgstr "Scira AIで開く"
 msgid "Open in split pane"
 msgstr "分割ペインで開く"
 
+msgid "Open in Superset"
+msgstr "Supersetで開く"
+
 msgid "Open in T3 Chat"
 msgstr "T3 Chatで開く"
 
@@ -10854,9 +10854,6 @@ msgstr "プラン"
 
 msgid "Plan restored"
 msgstr "プランを復元しました"
-
-msgid "Plan, ask, build..."
-msgstr "計画、質問、構築..."
 
 msgid "Planning the tooltip refactor"
 msgstr "tooltipのリファクタリングを計画中"
@@ -11619,6 +11616,9 @@ msgstr "プルリクエストを更新"
 
 msgid "Refreshes when Claude Code next runs."
 msgstr "次に Claude Code を実行すると更新されます。"
+
+msgid "Refreshes when OpenCode next runs."
+msgstr "次に OpenCode を実行すると更新されます。"
 
 msgid "Register any CLI agent alongside the built-ins, each with its own name, icon, and launch command."
 msgstr "組み込みのエージェントと並べて、任意のCLIエージェントを登録できます。名前、アイコン、起動コマンドはそれぞれ設定できます。"
@@ -16265,6 +16265,9 @@ msgstr "あなたの順位は?"
 
 msgid "Where does my code run?"
 msgstr "コードはどこで実行されますか?"
+
+msgid "Where Page links in terminals, chat messages, and task markdown open when clicked."
+msgstr "ターミナル、チャットメッセージ、タスクの Markdown 内のページリンクをクリックしたときの開き先。"
 
 msgid "Where serious teams are"
 msgstr "本気のチームの現在地"

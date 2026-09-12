@@ -1043,9 +1043,6 @@ msgstr "~/agent $"
 msgid "⌘ click"
 msgstr "⌘ kliknutí"
 
-msgid "⌘↵ to send"
-msgstr "⌘↵ odešle"
-
 msgid "⌘⇧ click"
 msgstr "⌘⇧ kliknutí"
 
@@ -10168,6 +10165,9 @@ msgstr "Otevřít v Scira AI"
 msgid "Open in split pane"
 msgstr "Otevřít v rozděleném panelu"
 
+msgid "Open in Superset"
+msgstr "Otevřít v Superset"
+
 msgid "Open in T3 Chat"
 msgstr "Otevřít v T3 Chat"
 
@@ -10854,9 +10854,6 @@ msgstr "Tarif"
 
 msgid "Plan restored"
 msgstr "Tarif obnoven"
-
-msgid "Plan, ask, build..."
-msgstr "Plánujte, ptejte se, tvořte..."
 
 msgid "Planning the tooltip refactor"
 msgstr "Plánuji refaktor tooltipů"
@@ -11619,6 +11616,9 @@ msgstr "Obnovit pull requesty"
 
 msgid "Refreshes when Claude Code next runs."
 msgstr "Obnoví se při příštím spuštění Claude Code."
+
+msgid "Refreshes when OpenCode next runs."
+msgstr "Obnoví se při příštím spuštění OpenCode."
 
 msgid "Register any CLI agent alongside the built-ins, each with its own name, icon, and launch command."
 msgstr "Zaregistrujte vedle vestavěných libovolného CLI agenta, každého s vlastním jménem, ikonou a spouštěcím příkazem."
@@ -16265,6 +16265,9 @@ msgstr "Jak si stojíte?"
 
 msgid "Where does my code run?"
 msgstr "Kde běží můj kód?"
+
+msgid "Where Page links in terminals, chat messages, and task markdown open when clicked."
+msgstr "Kam se po kliknutí otevřou odkazy na stránky v terminálech, chatových zprávách a markdownu úkolů."
 
 msgid "Where serious teams are"
 msgstr "Kde jsou seriózní týmy"

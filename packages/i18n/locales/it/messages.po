@@ -1043,9 +1043,6 @@ msgstr "~/agent $"
 msgid "⌘ click"
 msgstr "⌘ clic"
 
-msgid "⌘↵ to send"
-msgstr "⌘↵ per inviare"
-
 msgid "⌘⇧ click"
 msgstr "⌘⇧ clic"
 
@@ -10168,6 +10165,9 @@ msgstr "Apri in Scira AI"
 msgid "Open in split pane"
 msgstr "Apri in un pannello diviso"
 
+msgid "Open in Superset"
+msgstr "Apri in Superset"
+
 msgid "Open in T3 Chat"
 msgstr "Apri in T3 Chat"
 
@@ -10854,9 +10854,6 @@ msgstr "Piano"
 
 msgid "Plan restored"
 msgstr "Piano ripristinato"
-
-msgid "Plan, ask, build..."
-msgstr "Pianifica, chiedi, costruisci..."
 
 msgid "Planning the tooltip refactor"
 msgstr "Pianificazione del refactor dei tooltip"
@@ -11619,6 +11616,9 @@ msgstr "Aggiorna le pull request"
 
 msgid "Refreshes when Claude Code next runs."
 msgstr "Si aggiorna alla prossima esecuzione di Claude Code."
+
+msgid "Refreshes when OpenCode next runs."
+msgstr "Si aggiorna alla prossima esecuzione di OpenCode."
 
 msgid "Register any CLI agent alongside the built-ins, each with its own name, icon, and launch command."
 msgstr "Registra qualsiasi agente CLI accanto a quelli integrati, ognuno con nome, icona e comando di avvio propri."
@@ -16265,6 +16265,9 @@ msgstr "In che posizione sei?"
 
 msgid "Where does my code run?"
 msgstr "Dove gira il mio codice?"
+
+msgid "Where Page links in terminals, chat messages, and task markdown open when clicked."
+msgstr "Dove si aprono i link alle Pagine nei terminali, nei messaggi di chat e nel markdown dei task quando vengono cliccati."
 
 msgid "Where serious teams are"
 msgstr "Dove sono i team seri"

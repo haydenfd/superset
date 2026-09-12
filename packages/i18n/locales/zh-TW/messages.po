@@ -1043,9 +1043,6 @@ msgstr "~/agent $"
 msgid "⌘ click"
 msgstr "⌘點選"
 
-msgid "⌘↵ to send"
-msgstr "⌘↵傳送"
-
 msgid "⌘⇧ click"
 msgstr "⌘⇧點選"
 
@@ -10168,6 +10165,9 @@ msgstr "在Scira AI中開啟"
 msgid "Open in split pane"
 msgstr "在分屏窗格中開啟"
 
+msgid "Open in Superset"
+msgstr "在 Superset 中開啟"
+
 msgid "Open in T3 Chat"
 msgstr "在T3 Chat中開啟"
 
@@ -10854,9 +10854,6 @@ msgstr "方案"
 
 msgid "Plan restored"
 msgstr "方案已恢復"
-
-msgid "Plan, ask, build..."
-msgstr "規劃、提問、構建..."
 
 msgid "Planning the tooltip refactor"
 msgstr "正在規劃tooltip重構"
@@ -11619,6 +11616,9 @@ msgstr "重新整理拉取請求"
 
 msgid "Refreshes when Claude Code next runs."
 msgstr "下次執行 Claude Code 時重新整理。"
+
+msgid "Refreshes when OpenCode next runs."
+msgstr "下次執行 OpenCode 時重新整理。"
 
 msgid "Register any CLI agent alongside the built-ins, each with its own name, icon, and launch command."
 msgstr "在內建代理程式之外註冊任意CLI代理程式，各自擁有名稱、圖示和啟動命令。"
@@ -16265,6 +16265,9 @@ msgstr "你排第幾？"
 
 msgid "Where does my code run?"
 msgstr "我的程式碼在哪裡執行？"
+
+msgid "Where Page links in terminals, chat messages, and task markdown open when clicked."
+msgstr "終端機、聊天訊息和任務 Markdown 中的頁面連結點擊後在何處開啟。"
 
 msgid "Where serious teams are"
 msgstr "認真的團隊都在這裡"
