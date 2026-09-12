@@ -4,11 +4,44 @@ import os from "node:os";
 import path from "node:path";
 import {
 	getAppCommand,
+	getMacOSAppProbes,
 	pathIsMissing,
 	RelativePathWithoutCwdError,
 	resolvePath,
 	stripPathWrappers,
 } from "./helpers";
+
+describe("getMacOSAppProbes", () => {
+	test("returns application-name probes", () => {
+		expect(getMacOSAppProbes("vscode")).toEqual([
+			{ type: "appName", value: "Visual Studio Code" },
+		]);
+		expect(getMacOSAppProbes("terminal")).toEqual([
+			{ type: "appName", value: "Terminal" },
+		]);
+		expect(getMacOSAppProbes("finder")).toEqual([]);
+	});
+
+	test("returns every Zed bundle variant", () => {
+		expect(getMacOSAppProbes("zed")).toEqual([
+			{ type: "bundleId", value: "dev.zed.Zed" },
+			{ type: "bundleId", value: "dev.zed.Zed-Preview" },
+			{ type: "bundleId", value: "dev.zed.Zed-Nightly" },
+			{ type: "bundleId", value: "dev.zed.Zed-Dev" },
+		]);
+	});
+
+	test("returns every IntelliJ and PyCharm bundle variant", () => {
+		expect(getMacOSAppProbes("intellij")).toEqual([
+			{ type: "bundleId", value: "com.jetbrains.intellij" },
+			{ type: "bundleId", value: "com.jetbrains.intellij.ce" },
+		]);
+		expect(getMacOSAppProbes("pycharm")).toEqual([
+			{ type: "bundleId", value: "com.jetbrains.pycharm" },
+			{ type: "bundleId", value: "com.jetbrains.pycharm.ce" },
+		]);
+	});
+});
 
 describe("getAppCommand", () => {
 	const originalPlatform = process.platform;
