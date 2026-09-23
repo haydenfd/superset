@@ -196,6 +196,7 @@ export function useV2WorkspaceRun({
 			const terminalId = await launcher.create({
 				command,
 				cwd: definition.cwd,
+				trackCommandCompletion: true,
 			});
 			const startedAt = Date.now();
 			updateWorkspaceRunTerminals((states) => {
@@ -278,12 +279,10 @@ export function useV2WorkspaceRun({
 				workspaceId,
 				data: CTRL_C_INPUT,
 			});
-			const stoppedAt = Date.now();
 			updateWorkspaceRunTerminals((states) => {
 				const state = states[runningState.terminalId];
 				if (!state || state.state !== "running") return;
 				state.stopRequestedAt = stopRequestedAt;
-				markStopped(state, stoppedAt, { state: "stopped-by-user" });
 			});
 		} catch (error) {
 			if (isTerminalGoneError(error)) {
@@ -387,14 +386,23 @@ export function useV2WorkspaceRun({
 	}, [runningState, startWorkspaceRun, stopWorkspaceRun]);
 
 	useWorkspaceEvent("terminal:lifecycle", workspaceId, (payload) => {
-		if (payload.eventType !== "exit") return;
+		if (
+			payload.eventType !== "exit" &&
+			payload.eventType !== "command-finished"
+		) {
+			return;
+		}
+		if (payload.terminalId !== runningState?.terminalId) return;
 		updateWorkspaceRunTerminals((states) => {
 			const state = states[payload.terminalId];
 			if (!state || state.state !== "running") return;
-			markStopped(state, payload.occurredAt, {
-				exitCode: payload.exitCode,
-				signal: payload.signal,
-			});
+			markStopped(
+				state,
+				payload.occurredAt,
+				payload.eventType === "exit"
+					? { exitCode: payload.exitCode, signal: payload.signal }
+					: undefined,
+			);
 		});
 	});
 
