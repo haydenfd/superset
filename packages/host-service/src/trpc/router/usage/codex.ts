@@ -18,6 +18,7 @@ const CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
 const CODEX_RESET_CREDITS_URL =
 	"https://chatgpt.com/backend-api/wham/rate-limit-reset-credits";
 const FETCH_TIMEOUT_MS = 10_000;
+const RESET_CREDITS_TIMEOUT_MS = 3_000;
 
 interface CodexAuthFile {
 	tokens?: {
@@ -62,7 +63,7 @@ async function nextResetExpiry(
 	try {
 		const response = await fetch(CODEX_RESET_CREDITS_URL, {
 			headers,
-			signal: AbortSignal.timeout(FETCH_TIMEOUT_MS),
+			signal: AbortSignal.timeout(RESET_CREDITS_TIMEOUT_MS),
 		});
 		if (!response.ok) return null;
 		const details = (await response.json()) as CodexResetCreditsResponse;

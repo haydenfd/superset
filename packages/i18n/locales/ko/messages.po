@@ -2496,7 +2496,7 @@ msgstr "칩 스타일을 tooltip.tsx에 반영"
 
 #. placeholder {0}: account.resetCredits.availableCount
 msgid "Banked resets: {0}"
-msgstr "보유한 초기화: {0}"
+msgstr "보유한 재설정 횟수: {0}"
 
 msgid "Bar"
 msgstr "막대"
