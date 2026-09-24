@@ -89,6 +89,8 @@ export function OpenInExternalDropdownItems({
 		JETBRAINS_OPTIONS,
 		availableApps,
 	);
+	const hasIdeApps =
+		ideApps.length + vscodeApps.length + jetbrainsApps.length > 0;
 
 	const renderAppOptions = (
 		apps: OpenInExternalAppOption[],
@@ -124,88 +126,93 @@ export function OpenInExternalDropdownItems({
 	return (
 		<>
 			{renderAppOptions(FINDER_OPTIONS, "finder")}
-			<DropdownMenuSub>
-				<DropdownMenuSubTrigger className={subTriggerClassName}>
-					<div
-						className={cn(
-							"flex items-center gap-2",
-							subTriggerContentClassName,
-						)}
+			{hasIdeApps && (
+				<DropdownMenuSub>
+					<DropdownMenuSubTrigger className={subTriggerClassName}>
+						<div
+							className={cn(
+								"flex items-center gap-2",
+								subTriggerContentClassName,
+							)}
+						>
+							<img
+								src={
+									activeIdeOption
+										? isDark
+											? activeIdeOption.darkIcon
+											: activeIdeOption.lightIcon
+										: vscodeIcon
+								}
+								alt=""
+								className={cn("size-4 object-contain", subTriggerIconClassName)}
+							/>
+							<span>
+								<Trans>IDE</Trans>
+							</span>
+						</div>
+					</DropdownMenuSubTrigger>
+					<DropdownMenuSubContent
+						sideOffset={8}
+						className={subContentClassName}
 					>
-						<img
-							src={
-								activeIdeOption
-									? isDark
-										? activeIdeOption.darkIcon
-										: activeIdeOption.lightIcon
-									: vscodeIcon
-							}
-							alt=""
-							className={cn("size-4 object-contain", subTriggerIconClassName)}
-						/>
-						<span>
-							<Trans>IDE</Trans>
-						</span>
-					</div>
-				</DropdownMenuSubTrigger>
-				<DropdownMenuSubContent sideOffset={8} className={subContentClassName}>
-					{renderAppOptions(ideApps, "ide")}
-					{vscodeApps.length > 0 && (
-						<DropdownMenuSub>
-							<DropdownMenuSubTrigger className={subTriggerClassName}>
-								<div
-									className={cn(
-										"flex items-center gap-2",
-										subTriggerContentClassName,
-									)}
-								>
-									<img
-										src={vscodeIcon}
-										alt=""
+						{renderAppOptions(ideApps, "ide")}
+						{vscodeApps.length > 0 && (
+							<DropdownMenuSub>
+								<DropdownMenuSubTrigger className={subTriggerClassName}>
+									<div
 										className={cn(
-											"size-4 object-contain",
-											subTriggerIconClassName,
+											"flex items-center gap-2",
+											subTriggerContentClassName,
 										)}
-									/>
-									<span>
-										<Trans>VS Code</Trans>
-									</span>
-								</div>
-							</DropdownMenuSubTrigger>
-							<DropdownMenuSubContent className={subContentClassName}>
-								{renderAppOptions(vscodeApps, "vscode")}
-							</DropdownMenuSubContent>
-						</DropdownMenuSub>
-					)}
-					{jetbrainsApps.length > 0 && (
-						<DropdownMenuSub>
-							<DropdownMenuSubTrigger className={subTriggerClassName}>
-								<div
-									className={cn(
-										"flex items-center gap-2",
-										subTriggerContentClassName,
-									)}
-								>
-									<img
-										src={jetbrainsIcon}
-										alt=""
+									>
+										<img
+											src={vscodeIcon}
+											alt=""
+											className={cn(
+												"size-4 object-contain",
+												subTriggerIconClassName,
+											)}
+										/>
+										<span>
+											<Trans>VS Code</Trans>
+										</span>
+									</div>
+								</DropdownMenuSubTrigger>
+								<DropdownMenuSubContent className={subContentClassName}>
+									{renderAppOptions(vscodeApps, "vscode")}
+								</DropdownMenuSubContent>
+							</DropdownMenuSub>
+						)}
+						{jetbrainsApps.length > 0 && (
+							<DropdownMenuSub>
+								<DropdownMenuSubTrigger className={subTriggerClassName}>
+									<div
 										className={cn(
-											"size-4 object-contain",
-											subTriggerIconClassName,
+											"flex items-center gap-2",
+											subTriggerContentClassName,
 										)}
-									/>
-									<span>
-										<Trans>JetBrains</Trans>
-									</span>
-								</div>
-							</DropdownMenuSubTrigger>
-							<DropdownMenuSubContent className={subContentClassName}>
-								{renderAppOptions(jetbrainsApps, "jetbrains")}
-							</DropdownMenuSubContent>
-						</DropdownMenuSub>
-					)}
-				</DropdownMenuSubContent>
-			</DropdownMenuSub>
+									>
+										<img
+											src={jetbrainsIcon}
+											alt=""
+											className={cn(
+												"size-4 object-contain",
+												subTriggerIconClassName,
+											)}
+										/>
+										<span>
+											<Trans>JetBrains</Trans>
+										</span>
+									</div>
+								</DropdownMenuSubTrigger>
+								<DropdownMenuSubContent className={subContentClassName}>
+									{renderAppOptions(jetbrainsApps, "jetbrains")}
+								</DropdownMenuSubContent>
+							</DropdownMenuSub>
+						)}
+					</DropdownMenuSubContent>
+				</DropdownMenuSub>
+			)}
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger className={subTriggerClassName}>
 					<div
