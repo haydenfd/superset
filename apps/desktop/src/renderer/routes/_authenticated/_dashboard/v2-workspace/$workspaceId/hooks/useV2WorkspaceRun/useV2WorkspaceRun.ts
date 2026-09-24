@@ -21,6 +21,10 @@ import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
 import { waitForWorkspaceRunStop } from "./waitForWorkspaceRunStop";
+import {
+	applyWorkspaceRunLifecycleEvent,
+	markStopped,
+} from "./workspaceRunLifecycle";
 
 const CTRL_C_INPUT = "\u0003";
 const TERMINAL_GONE_ERROR_MESSAGES = [
@@ -36,21 +40,6 @@ function isTerminalGoneError(error: unknown): boolean {
 	return TERMINAL_GONE_ERROR_MESSAGES.some((terminalMessage) =>
 		message.includes(terminalMessage),
 	);
-}
-
-function markStopped(
-	state: WorkspaceRunTerminalState,
-	stoppedAt: number,
-	overrides?: Partial<
-		Pick<WorkspaceRunTerminalState, "exitCode" | "signal" | "state">
-	>,
-) {
-	state.state =
-		overrides?.state ??
-		(state.stopRequestedAt ? "stopped-by-user" : "stopped-by-exit");
-	state.stoppedAt = stoppedAt;
-	if (overrides?.exitCode !== undefined) state.exitCode = overrides.exitCode;
-	if (overrides?.signal !== undefined) state.signal = overrides.signal;
 }
 
 function makeTerminalPane(
@@ -193,12 +182,7 @@ export function useV2WorkspaceRun({
 			// workspaceRunTerminals. Snapshot before launch so the new terminal
 			// we're about to create doesn't itself match.
 			const priorRunTerminalIds = new Set(Object.keys(workspaceRunTerminals));
-
-			const terminalId = await launcher.create({
-				command,
-				cwd: definition.cwd,
-				trackCommandCompletion: true,
-			});
+			const terminalId = launcher.mint();
 			const startedAt = Date.now();
 			updateWorkspaceRunTerminals((states) => {
 				states[terminalId] = {
@@ -211,6 +195,19 @@ export function useV2WorkspaceRun({
 					startedAt,
 				};
 			});
+			try {
+				await launcher.create({
+					terminalId,
+					command,
+					cwd: definition.cwd,
+					trackCommandCompletion: true,
+				});
+			} catch (error) {
+				updateWorkspaceRunTerminals((states) => {
+					delete states[terminalId];
+				});
+				throw error;
+			}
 
 			const state = store.getState();
 			let reused: { tabId: string; paneId: string } | null = null;
@@ -406,23 +403,8 @@ export function useV2WorkspaceRun({
 	}, [runningState, startWorkspaceRun, stopWorkspaceRun]);
 
 	useWorkspaceEvent("terminal:lifecycle", workspaceId, (payload) => {
-		if (
-			payload.eventType !== "exit" &&
-			payload.eventType !== "command-finished"
-		) {
-			return;
-		}
-		if (payload.terminalId !== runningState?.terminalId) return;
 		updateWorkspaceRunTerminals((states) => {
-			const state = states[payload.terminalId];
-			if (!state || state.state !== "running") return;
-			markStopped(
-				state,
-				payload.occurredAt,
-				payload.eventType === "exit"
-					? { exitCode: payload.exitCode, signal: payload.signal }
-					: undefined,
-			);
+			applyWorkspaceRunLifecycleEvent(states, payload);
 		});
 	});
 
