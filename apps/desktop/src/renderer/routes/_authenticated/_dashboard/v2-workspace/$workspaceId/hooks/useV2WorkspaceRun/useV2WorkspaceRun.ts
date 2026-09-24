@@ -20,6 +20,7 @@ import { selectWorkspaceRunDefinition } from "shared/workspace-run-definition";
 import type { StoreApi } from "zustand/vanilla";
 import type { PaneViewerData, TerminalPaneData } from "../../types";
 import type { TerminalLauncher } from "../useV2TerminalLauncher";
+import { waitForWorkspaceRunStop } from "./waitForWorkspaceRunStop";
 
 const CTRL_C_INPUT = "\u0003";
 const TERMINAL_GONE_ERROR_MESSAGES = [
@@ -274,16 +275,34 @@ export function useV2WorkspaceRun({
 		setIsPending(true);
 		try {
 			const stopRequestedAt = Date.now();
-			await writeInputMutation.mutateAsync({
-				terminalId: runningState.terminalId,
-				workspaceId,
-				data: CTRL_C_INPUT,
-			});
 			updateWorkspaceRunTerminals((states) => {
 				const state = states[runningState.terminalId];
 				if (!state || state.state !== "running") return;
 				state.stopRequestedAt = stopRequestedAt;
 			});
+			await writeInputMutation.mutateAsync({
+				terminalId: runningState.terminalId,
+				workspaceId,
+				data: CTRL_C_INPUT,
+			});
+			const stopped = await waitForWorkspaceRunStop(async () => {
+				const result = await utils.terminal.hasRunningProcess.fetch(
+					{
+						terminalId: runningState.terminalId,
+						workspaceId,
+					},
+					{ staleTime: 0 },
+				);
+				return result.running;
+			});
+			if (stopped) {
+				const stoppedAt = Date.now();
+				updateWorkspaceRunTerminals((states) => {
+					const state = states[runningState.terminalId];
+					if (!state || state.state !== "running") return;
+					markStopped(state, stoppedAt);
+				});
+			}
 		} catch (error) {
 			if (isTerminalGoneError(error)) {
 				const stoppedAt = Date.now();
@@ -320,6 +339,7 @@ export function useV2WorkspaceRun({
 		runningState,
 		t,
 		updateWorkspaceRunTerminals,
+		utils,
 		workspaceId,
 		writeInputMutation,
 	]);

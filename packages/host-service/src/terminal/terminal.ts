@@ -2401,7 +2401,10 @@ function tryTypeToPty(session: TerminalSession, data: string): boolean {
 
 function submitInitialCommand(session: TerminalSession): boolean {
 	if (!tryTypeToPty(session, "\r")) return false;
-	session.commandCompletionArmed = session.trackCommandCompletion;
+	const startupPromptCannotArriveLate =
+		session.shellReadyState !== "timed_out" || session.lateMarkerRecorded;
+	session.commandCompletionArmed =
+		session.trackCommandCompletion && startupPromptCannotArriveLate;
 	return true;
 }
 
